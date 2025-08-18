@@ -19,7 +19,11 @@ class Product(models.Model):
     attributes = models.ManyToManyField('Attribute')
     objects = ProductManager()
 
-
+class Meta:
+        db_table = 'product'
+        indexes = [models.Index(fields=["price"])]
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
 
 
 class ProductImage(models.Model):
