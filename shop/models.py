@@ -27,7 +27,7 @@ class Meta:
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to="media", verbose_name="Изображение")
+    image = models.ImageField(upload_to="products", verbose_name="Изображение")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
