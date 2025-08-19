@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список товаров</title>
+</head>
+<body>
+    <!-- Отображение текущей даты и времени -->
+    <h1>Текущая дата и время: {{ current_time }}</h1>
+
+    <!-- Отображение списка товаров -->
+    <h2>Товары</h2>
+    <ul>
+        {% for product in products %}
+            <li>
+                <strong>Название:</strong> {{ product.title }}<br>
+                <strong>Описание:</strong> {{ product.description }}<br>
+                <strong>Цена:</strong> {{ product.price }}<br>
+                <strong>В наличии:</strong> {{ product.stock }}
+            </li>
+        {% empty %}
+            <li>Нет доступных товаров.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

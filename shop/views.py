@@ -1,31 +1,27 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Product
-def  all_products(request):
-    products=Product.objects.all()
-    body=''' <!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <title>Список продуктов</title>
-    </head>
-    <body>
-    <h1> Список продуктов</h1>
-    <ul>
-    '''
-    if products.exists():
-        for product in products:
-            body += f'<li>{product.title} - {product.price}-{product.stock}-{product.attributes}</li>'
+class AllProductsView(ListView):
+    """Класс-представление для отображения списка продуктов."""
+    model = Product
+    template_name = "products.html"
+    context_object_name = "products"
 
-    else:
-        body+= '<li>Продукты отсутствуют</li>'
+    def get_context_data(self, **kwargs):
+        """Добавляет в контекст текущее время."""
+        context = super().get_context_data(**kwargs)
+        context["current_time"] = datetime.now()  # Передача текущей даты и времени
+        return context
 
+def all_products(request):
+    """Возвращает HTML-страницу со списком продуктов и текущим временем."""
+    products = Product.objects.all()
+    current_time = datetime.now()  # Получение текущей даты и времени
+    return render(request, "products.html", {
+        "products": products,
+        "current_time": current_time,  # Передача текущего времени в контекст
+    })
 
-    body += '''
-    </ul>
-    </body>
-</html>'''
-    return HttpResponse(body)
 # Create your views here.
 
 
